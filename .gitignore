@@ -1,2 +1,2 @@
 mqtt_broker/data/*
-mqtt_broker/logs/*
+mqtt_broker/log/*

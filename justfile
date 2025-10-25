@@ -1,16 +1,20 @@
 set shell := ["bash", "-cu"]
 
+[no-cd]
 start:
-    podman-compose -f mqtt_broker/broker.yml up -d 
+    cd mqtt_broker && podman-compose -f broker.yml up -d 
 
+[no-cd]
 stop:
-    podman-compose -f mqtt_broker/broker.yml down 
+    cd mqtt_broker && podman-compose -f broker.yml down 
 
+[no-cd]
 status:
-    podman-compose -f mqtt_broker/broker.yml ps 
+    cd mqtt_broker && podman-compose -f broker.yml ps 
 
+[no-cd]
 logs:
-    podman-compose -f mqtt_broker/broker.yml logs 
+    cd mqtt_broker && podman-compose -f broker.yml logs 
 
 restart: stop start
 
