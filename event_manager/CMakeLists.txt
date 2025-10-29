@@ -17,4 +17,4 @@ add_executable(events_manager_tests ${SOURCES})
 target_include_directories(events_manager_tests PRIVATE app)
 target_link_libraries(events_manager_tests GTest::gtest GTest::gtest_main)
 
-add_test(NAME foo_test COMMAND foo_test)
+add_test(NAME events_manager_tests COMMAND events_manager_tests)

@@ -2,33 +2,27 @@
 
 #include "EventsManager.h"
 
-class Foo {
-public:
-    int getValue() const { return 42; }
-    int add(int a, int b) const { return a + b; }
-};
+#include "MockController.h"
+#include "MockNotifier.h"
 
-// Test fixture (opzionale per test semplici)
-class FooTest : public ::testing::Test {
-protected:
-    Foo foo;
-};
+TEST(EventsManagerTest, SingleEventNotifyAndControl) {
+  EventsManager manager{};
 
-// Test che verifica getValue()
-TEST_F(FooTest, GetValueReturns42) {
-    EXPECT_EQ(foo.getValue(), 42);
-}
+  MockNotifier notifier;
+  MockController controller;
 
-// Test che verifica add()
-TEST_F(FooTest, AddTwoNumbers) {
-    EXPECT_EQ(foo.add(2, 3), 5);
-    EXPECT_EQ(foo.add(-1, 1), 0);
-}
+  manager.SetNotifier(&notifier);
+  manager.SetController(&controller);
 
-// Test ancora più semplice senza fixture
-TEST(FooSimpleTest, BasicTest) {
-    Foo foo;
-    EXPECT_EQ(foo.getValue(), 42);
+  static const char *testTopic = "TestTopic";
+  static const char *testPayload = "TestPayload";
+
+  manager.PushEvent(testTopic, testPayload);
+
+  EXPECT_TRUE(notifier.notified);
+  EXPECT_EQ(notifier.lastTopic, testTopic);
+  EXPECT_EQ(notifier.lastPayload, testPayload);
+  EXPECT_EQ(controller.numEvents, 1);
 }
 
 // main per eseguire i test
