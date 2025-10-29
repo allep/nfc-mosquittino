@@ -1,5 +1,7 @@
 #include <gtest/gtest.h>
 
+#include "EventsManager.h"
+
 class Foo {
 public:
     int getValue() const { return 42; }

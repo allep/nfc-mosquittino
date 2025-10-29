@@ -1,9 +1,20 @@
 cmake_minimum_required(VERSION 4.1)
 
+project(EventsManager)
+set(CMAKE_CXX_STANDARD 20)
+
 enable_testing()
 
 find_package(GTest REQUIRED)
-add_executable(foo_test tests/foo_test.cpp)
-target_link_libraries(foo_test GTest::gtest GTest::gtest_main)
+
+set(SOURCES
+    app/EventsManager.cpp
+    tests/EventsManagerTests.cpp
+)
+
+add_executable(events_manager_tests ${SOURCES})
+
+target_include_directories(events_manager_tests PRIVATE app)
+target_link_libraries(events_manager_tests GTest::gtest GTest::gtest_main)
 
 add_test(NAME foo_test COMMAND foo_test)
