@@ -25,7 +25,6 @@ TEST(EventsManagerTest, SingleEventNotifyAndControl) {
   EXPECT_EQ(controller.numEvents, 1);
 }
 
-// main per eseguire i test
 int main(int argc, char **argv) {
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
