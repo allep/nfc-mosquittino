@@ -1,0 +1,11 @@
+set shell := ["bash", "-cu"]
+
+create-arduino-lib:
+    mkdir EventsManager
+    cp app/* EventsManager
+    cp outbound_adapters/* EventsManager
+    tar -cvzf EventsManager.tar.gz EventsManager
+    rm -rfv EventsManager
+    mv EventsManager.tar.gz ~/Arduino/libraries/
+    cd ~/Arduino/libraries && rm -rf EventsManager && tar -xvzf EventsManager.tar.gz && rm EventsManager.tar.gz
+
