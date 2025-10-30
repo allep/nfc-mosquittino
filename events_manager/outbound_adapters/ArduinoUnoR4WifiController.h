@@ -3,7 +3,9 @@
 
 #include <ForControllingPort.h>
 
-class ArduinoController : public ForControllingPort {
+#include <Arduino.h>
+
+class ArduinoController : public ForControlling {
 public:
   void OnEvent() override;
 };
