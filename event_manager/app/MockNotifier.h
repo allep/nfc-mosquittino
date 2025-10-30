@@ -8,13 +8,13 @@ public:
   void NotifyEvent(std::string topic, std::string payload) override {
     lastTopic = topic;
     lastPayload = payload;
-    notified = true;
+    ++notified;
   }
 
 public:
   std::string lastTopic;
   std::string lastPayload;
-  bool notified = false;
+  unsigned int notified{0};
 };
 
 #endif // __NOTIFIER_MOCK_H__
