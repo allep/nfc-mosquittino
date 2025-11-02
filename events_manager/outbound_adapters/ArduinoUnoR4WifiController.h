@@ -7,7 +7,7 @@
 
 class ArduinoController : public ForControlling {
 public:
-  void OnEvent() override;
+  void OnEvent(std::string_view topic, std::string_view payload) override;
 };
 
 #endif

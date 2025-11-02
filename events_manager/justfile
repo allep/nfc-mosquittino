@@ -1,12 +1,14 @@
 set shell := ["bash", "-cu"]
 
-make:
+clean:
     rm -rf build
+
+make:
     cmake -B build
     cmake --build build
 
 test: make
-    cd build && ctest
+    cd build && ctest -V
 
 create-arduino-lib:
     mkdir EventsManager
