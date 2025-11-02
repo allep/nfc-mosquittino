@@ -14,6 +14,7 @@ create-arduino-lib:
     mkdir EventsManager
     cp app/* EventsManager
     cp outbound_adapters/* EventsManager
+    cp inbound_adapters/* EventsManager
     tar -cvzf EventsManager.tar.gz EventsManager
     rm -rfv EventsManager
     mv EventsManager.tar.gz ~/Arduino/libraries/
