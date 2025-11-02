@@ -10,6 +10,8 @@ make:
 test: make
     cd build && ctest -V
 
+all: clean make test create-arduino-lib
+
 create-arduino-lib:
     mkdir EventsManager
     cp app/* EventsManager

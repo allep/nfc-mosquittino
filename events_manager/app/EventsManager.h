@@ -24,8 +24,8 @@ public:
   void PushEvent(std::string_view topic, std::string_view payload) override;
 
 private:
-  StaticContainer<ForNotifying, 3> _notifier{};
-  StaticContainer<ForControlling, 3> _controller{};
+  StaticContainer<ForNotifying, 3> _notifiers{};
+  StaticContainer<ForControlling, 3> _controllers{};
 };
 
 #endif
