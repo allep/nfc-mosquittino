@@ -20,9 +20,6 @@ void ArduinoMQTTSubscriber::SetupBlocking(std::string_view clientId,
 
 void ArduinoMQTTSubscriber::Subscribe(std::string_view topic) {
   _mqtt.subscribe(topic.data());
-
-  Serial.println("Subscribe fatta al topic:");
-  Serial.println(topic.data());
 }
 
 void ArduinoMQTTSubscriber::SetProcessor(ForProcessing *processor) {
@@ -33,8 +30,6 @@ void ArduinoMQTTSubscriber::Process() {
   _mqtt.poll();
 
   if (_mqtt.parseMessage()) {
-    Serial.println("Received something ...");
-
     auto t{_mqtt.messageTopic()};
     std::string_view topic{t.c_str()};
 
