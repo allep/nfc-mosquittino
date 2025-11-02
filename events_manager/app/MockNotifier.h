@@ -5,7 +5,7 @@
 
 class MockNotifier : public ForNotifying {
 public:
-  void NotifyEvent(std::string topic, std::string payload) override {
+  void NotifyEvent(std::string_view topic, std::string_view payload) override {
     lastTopic = topic;
     lastPayload = payload;
     ++notified;

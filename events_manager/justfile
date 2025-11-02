@@ -1,5 +1,13 @@
 set shell := ["bash", "-cu"]
 
+make:
+    rm -rf build
+    cmake -B build
+    cmake --build build
+
+test: make
+    cd build && ctest
+
 create-arduino-lib:
     mkdir EventsManager
     cp app/* EventsManager

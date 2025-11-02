@@ -5,7 +5,9 @@
 
 class MockController : public ForControlling {
 public:
-  void OnEvent() override { ++numEvents; }
+  void OnEvent(std::string_view topic, std::string_view payload) override {
+    ++numEvents;
+  }
 
 public:
   unsigned int numEvents{0};
