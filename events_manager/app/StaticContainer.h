@@ -20,7 +20,17 @@ public:
   }
 
   bool Remove(T *item) {
-    // TODO FIXME
+    for (size_t ix = 0; ix < _count; ++ix) {
+      if (_container[ix] == item) {
+        for (size_t jx = ix; jx < _count - 1; ++jx) {
+          _container[jx] = _container[jx + 1];
+        }
+
+        _container[_count--] = nullptr;
+        return true;
+      }
+    }
+
     return false;
   }
 
