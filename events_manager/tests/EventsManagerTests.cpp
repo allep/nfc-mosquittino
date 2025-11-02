@@ -69,6 +69,36 @@ TEST(EventsManagerTest, MultipleEventDifferentContentNotifyAndControl) {
   EXPECT_EQ(controller.numEvents, 2);
 }
 
+TEST(EventsManagerTest, MultipleEventsWithReset) {
+  EventsManager manager{};
+
+  MockNotifier notifier;
+  MockController controller;
+
+  manager.SetNotifier(&notifier);
+  manager.SetController(&controller);
+
+  static const char *topic = "TestTopic";
+  static const char *payload = "TestPayload";
+
+  manager.PushEvent(topic, payload);
+
+  EXPECT_EQ(notifier.notified, 1);
+  EXPECT_EQ(notifier.lastTopic, topic);
+  EXPECT_EQ(notifier.lastPayload, payload);
+  EXPECT_EQ(controller.numEvents, 1);
+
+  manager.ResetNotifier();
+  manager.ResetController();
+
+  manager.PushEvent(topic, payload);
+
+  EXPECT_EQ(notifier.notified, 1);
+  EXPECT_EQ(notifier.lastTopic, topic);
+  EXPECT_EQ(notifier.lastPayload, payload);
+  EXPECT_EQ(controller.numEvents, 1);
+}
+
 int main(int argc, char **argv) {
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
