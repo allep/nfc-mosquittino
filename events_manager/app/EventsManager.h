@@ -1,6 +1,8 @@
 #ifndef __EVENTS_MANAGER_H__
 #define __EVENTS_MANAGER_H__
 
+#include "StaticContainer.h"
+
 // Inbound ports
 #include "ForConfiguringPort.h"
 #include "ForSendingEventsPort.h"
@@ -13,17 +15,17 @@
 
 class EventsManager : public ForConfiguring, public ForProcessing {
 public:
-  void SetNotifier(ForNotifying *receiver) override;
-  void ResetNotifier() override;
+  void AddNotifier(ForNotifying *receiver) override;
+  void ResetNotifiers() override;
 
-  void SetController(ForControlling *controller) override;
-  void ResetController() override;
+  void AddController(ForControlling *controller) override;
+  void ResetControllers() override;
 
   void PushEvent(std::string_view topic, std::string_view payload) override;
 
 private:
-  ForNotifying *_notifier{};
-  ForControlling *_controller{};
+  StaticContainer<ForNotifying, 3> _notifier{};
+  StaticContainer<ForControlling, 3> _controller{};
 };
 
 #endif

@@ -6,11 +6,11 @@ class ForControlling;
 
 class ForConfiguring {
 public:
-  virtual void SetNotifier(ForNotifying *receiver) = 0;
-  virtual void ResetNotifier() = 0;
+  virtual void AddNotifier(ForNotifying *receiver) = 0;
+  virtual void ResetNotifiers() = 0;
 
-  virtual void SetController(ForControlling *controller) = 0;
-  virtual void ResetController() = 0;
+  virtual void AddController(ForControlling *controller) = 0;
+  virtual void ResetControllers() = 0;
 };
 
 #endif

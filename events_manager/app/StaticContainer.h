@@ -1,6 +1,8 @@
 #ifndef __STATIC_CONTAINER_H__
 #define __STATIC_CONTAINER_H__
 
+#include <cstddef>
+
 template<typename T, size_t MAX_SIZE> 
 class StaticContainer {
 public:
@@ -32,6 +34,15 @@ public:
     }
 
     return false;
+  }
+
+  bool RemoveAll() {
+    for (size_t ix = 0; ix < _count; ++ix) {
+      _container[ix] = nullptr;
+    }
+    _count = 0;
+
+    return true;
   }
 
   T *operator[](size_t index) {

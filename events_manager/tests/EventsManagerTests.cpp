@@ -11,8 +11,8 @@ TEST(EventsManagerTest, SingleEventNotifyAndControl) {
   MockNotifier notifier;
   MockController controller;
 
-  manager.SetNotifier(&notifier);
-  manager.SetController(&controller);
+  manager.AddNotifier(&notifier);
+  manager.AddController(&controller);
 
   static const char *testTopic = "TestTopic";
   static const char *testPayload = "TestPayload";
@@ -31,8 +31,8 @@ TEST(EventsManagerTest, MultipleEventSameContentNotifyAndControl) {
   MockNotifier notifier;
   MockController controller;
 
-  manager.SetNotifier(&notifier);
-  manager.SetController(&controller);
+  manager.AddNotifier(&notifier);
+  manager.AddController(&controller);
 
   static const char *testTopic = "TestTopic";
   static const char *testPayload = "TestPayload";
@@ -52,8 +52,8 @@ TEST(EventsManagerTest, MultipleEventDifferentContentNotifyAndControl) {
   MockNotifier notifier;
   MockController controller;
 
-  manager.SetNotifier(&notifier);
-  manager.SetController(&controller);
+  manager.AddNotifier(&notifier);
+  manager.AddController(&controller);
 
   static const char *firstTestTopic = "TestTopic";
   static const char *firstTestPayload = "TestPayload";
@@ -75,8 +75,8 @@ TEST(EventsManagerTest, MultipleEventsWithReset) {
   MockNotifier notifier;
   MockController controller;
 
-  manager.SetNotifier(&notifier);
-  manager.SetController(&controller);
+  manager.AddNotifier(&notifier);
+  manager.AddController(&controller);
 
   static const char *topic = "TestTopic";
   static const char *payload = "TestPayload";
@@ -88,8 +88,8 @@ TEST(EventsManagerTest, MultipleEventsWithReset) {
   EXPECT_EQ(notifier.lastPayload, payload);
   EXPECT_EQ(controller.numEvents, 1);
 
-  manager.ResetNotifier();
-  manager.ResetController();
+  manager.ResetNotifiers();
+  manager.ResetControllers();
 
   manager.PushEvent(topic, payload);
 

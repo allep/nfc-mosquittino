@@ -64,6 +64,21 @@ TEST(StaticContainerTest, MultipleRemove) {
   EXPECT_FALSE(container.Remove(&first));
 }
 
+TEST(StaticContainerTest, RemoveAll) {
+  StaticContainer<IElement, 3> container{};
+
+  auto first{ConcreteOne{}};
+  auto second{ConcreteOne{}};
+  auto third{ConcreteOne{}};
+
+  EXPECT_TRUE(container.Add(&first));
+  EXPECT_TRUE(container.Add(&second));
+  EXPECT_TRUE(container.Add(&third));
+
+  EXPECT_TRUE(container.RemoveAll());
+  EXPECT_EQ(container.Size(), 0);
+}
+
 TEST(StaticContainerTest, MultipleAddAndRemoveSameElement) {
   StaticContainer<IElement, 4> container{};
 
