@@ -9,6 +9,8 @@
 class ArduinoMQTTNotifier : public ForNotifying {
 public:
   ArduinoMQTTNotifier(MqttClient &mqttClient);
+  void SetupBlocking(std::string_view clientId, std::string_view broker,
+                     unsigned int port);
 
   void Poll();
   void NotifyEvent(std::string_view topic, std::string_view payload) override;
