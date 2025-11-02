@@ -4,7 +4,7 @@
 #include <ForNotifyingPort.h>
 
 #include <Arduino.h>
-#include <ArduinoMQTTClient.h>
+#include <ArduinoMqttClient.h>
 
 class ArduinoMQTTNotifier : public ForNotifying {
 public:

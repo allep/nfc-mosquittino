@@ -1,11 +1,15 @@
 #include <ArduinoUnoR4WifiMQTTNotifier.h>
 
-ArduinoUnoR4WifiMQTTNotifier::ArduinoUnoR4WifiMQTTNotifier(MqttClient& mqttClient) : _mqtt{mqttClient} {}
+ArduinoMQTTNotifier::ArduinoMQTTNotifier(MqttClient &mqttClient)
+    : _mqtt{mqttClient} {}
 
-void ArduinoUnoR4WifiMQTTNotifier::Poll() { _mqtt.poll(); }
+void ArduinoMQTTNotifier::Poll() { _mqtt.poll(); }
 
-void ArduinoUnoR4WifiMQTTNotifier::NotifyEvent(std::string_view topic, std::string_view payload) {
-  _mqtt.beginMessage(topic);
-  _mqtt.print(payload);
+void ArduinoMQTTNotifier::NotifyEvent(std::string_view topic,
+                                      std::string_view payload) {
+  const std::string t{topic};
+  const std::string p{payload};
+  _mqtt.beginMessage(t.c_str());
+  _mqtt.print(p.c_str());
   _mqtt.endMessage();
 }
