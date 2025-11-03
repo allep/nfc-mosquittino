@@ -1,6 +1,9 @@
 #include <ArduinoUnoR4WifiMQTTSubscriber.h>
 
+#include <Arduino.h>
+
 #include <string>
+#include <string_view>
 
 namespace {
 constexpr auto RECONNECT_DELAY_MS{500};

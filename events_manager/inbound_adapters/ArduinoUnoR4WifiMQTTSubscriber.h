@@ -3,10 +3,7 @@
 
 #include <ForSendingEventsPort.h>
 
-#include <Arduino.h>
 #include <ArduinoMqttClient.h>
-
-#include <string_view>
 
 class ArduinoMQTTSubscriber {
 public:
