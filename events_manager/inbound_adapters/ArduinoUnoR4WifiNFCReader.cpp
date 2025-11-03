@@ -2,7 +2,13 @@
 
 #include <Arduino.h>
 
-ArduinoNFCReader::ArduinoNFCReader(PN532 &nfcModule) : _nfc{nfcModule} {}
+namespace {
+constexpr auto NFC_READ_PAUSE_MS{1000};
+}
+
+ArduinoNFCReader::ArduinoNFCReader(PN532 &nfcModule, std::string_view id,
+                                   std::string_view eventId)
+    : _nfc{nfcModule}, _id{id.data()}, _eventId{eventId.data()} {}
 
 void ArduinoNFCReader::SetupBlocking() {
   _nfc.begin();
@@ -12,6 +18,8 @@ void ArduinoNFCReader::SetupBlocking() {
     Serial.print("Didn't find PN53x board");
     while (1)
       ;
+
+    // TODO FIXME: here we should probably return false
   }
 
   Serial.print("Found chip PN5");
@@ -37,32 +45,34 @@ void ArduinoNFCReader::SetProcessor(ForProcessing *processor) {
 }
 
 void ArduinoNFCReader::Process() {
-  bool success{};
-  uint8_t uid[] = {0, 0, 0, 0, 0, 0, 0}; // Buffer to store the returned UID
-  uint8_t uidLength; // Length of the UID (4 or 7 bytes depending on ISO14443A
-                     // card type)
+  uint8_t uid[] = {0, 0, 0, 0, 0, 0, 0};
+  uint8_t uidLength{};
 
-  // Wait for an ISO14443A type cards (Mifare, etc.).  When one is found
-  // 'uid' will be populated with the UID, and uidLength will indicate
-  // if the uid is 4 bytes (Mifare Classic) or 7 bytes (Mifare Ultralight)
-  success =
-      _nfc.readPassiveTargetID(PN532_MIFARE_ISO14443A, &uid[0], &uidLength);
+  bool success{
+      _nfc.readPassiveTargetID(PN532_MIFARE_ISO14443A, &uid[0], &uidLength)};
 
   if (success) {
-    Serial.println("Found a card!");
-    Serial.print("UID Length: ");
-    Serial.print(uidLength, DEC);
-    Serial.println(" bytes");
-    Serial.print("UID Value: ");
-    for (uint8_t i = 0; i < uidLength; i++) {
-      Serial.print(" 0x");
-      Serial.print(uid[i], HEX);
+    std::string content{"from:"};
+    content += _id;
+    content += ",value:";
+
+    char buf[3];
+
+    for (uint8_t ix = 0; ix < uidLength; ix++) {
+      sprintf(buf, "%02X", uid[ix]);
+      buf[2] = 0;
+      content += std::string{buf};
     }
+
     Serial.println("");
-    // Wait 1 second before continuing
-    delay(1000);
+    Serial.println(content.c_str());
+
+    if (_processor) {
+      _processor->PushEvent(_eventId, content);
+    }
+
+    delay(NFC_READ_PAUSE_MS);
   } else {
-    // PN532 probably timed out waiting for a card
-    Serial.println("Timed out waiting for a card");
+    Serial.print(".");
   }
 }
