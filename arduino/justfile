@@ -1,0 +1,16 @@
+set shell := ["bash", "-cu"]
+
+sketch:
+    mkdir nfc_tx
+    cp nfc_tx.ino Secrets.h nfc_tx
+    tar -cvzf nfc_tx.tar.gz nfc_tx
+    rm -rfv nfc_tx
+    mv nfc_tx.tar.gz ~/Arduino
+    cd ~/Arduino && rm -rf nfc_tx && tar -xvzf nfc_tx.tar.gz && rm nfc_tx.tar.gz
+    mkdir mqtt_rx
+    cp mqtt_rx.ino Secrets.h mqtt_rx
+    tar -cvzf mqtt_rx.tar.gz mqtt_rx
+    rm -rfv mqtt_rx
+    mv mqtt_rx.tar.gz ~/Arduino
+    cd ~/Arduino && rm -rf mqtt_rx && tar -xvzf mqtt_rx.tar.gz && rm mqtt_rx.tar.gz
+
