@@ -3,7 +3,7 @@
 
 #include <ForControllingPort.h>
 
-#include <Arduino.h>
+#include <string_view>
 
 class ArduinoController : public ForControlling {
 public:

@@ -54,7 +54,7 @@ void ArduinoNFCReader::Process() {
   if (success) {
     std::string content{"from:"};
     content += _id;
-    content += ",value:";
+    content += ";value:";
 
     char buf[3];
 
