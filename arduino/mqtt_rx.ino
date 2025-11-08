@@ -23,44 +23,64 @@ static ArduinoLedMatrixController ledMatrix{};
 static ArduinoSerialNotifier notifier{};
 static EventsManager eventsManager{};
 
-void setup() {
+void SetupSerialBlocking() {
   Serial.begin(115200);
   while (!Serial);
+}
 
-  Serial.println("Connessione WiFi...");
+void SetupWifiBlocking() {
+  Serial.println("Wifi connection ...");
   if (WiFi.begin(ssid, password) != WL_CONNECTED) {
-    Serial.println("Connessione fallita!");
+    Serial.println("Connection failed!");
     while (true);
   }
-  Serial.println("Connesso al WiFi!");
+  Serial.println("Wifi connected.");
 
   delay(2000);
 
   Serial.print("IP: ");
   Serial.println(WiFi.localIP());
+}
 
-  // Connessione al broker MQTT
-  Serial.print("Connessione al broker MQTT...");
-  Serial.println(broker);
+void SetupMQTT() {
+  Serial.print("MQTT broker connection to ");
+  Serial.print(broker);
+  Serial.println(" ...");
 
   subscriber.SetupBlocking(clientId, broker, port);
   subscriber.Subscribe(topic);
 
-  Serial.println("Connesso al broker MQTT!");
+  Serial.println("MQTT broker connected.");
+}
 
-  std::map<std::string, const uint32_t*> contentMap = {
-    {"F31531FA", LEDMATRIX_HEART_BIG},
+void SetupLedMatrix() {
+  ContentMap contentMap = {
+    {"F31531FA", LEDMATRIX_HEART_BIG}, // small round tag
     {"04FCD53A255580", LEDMATRIX_CLOUD_WIFI},
     {"04BCD53A255580", LEDMATRIX_DANGER},
+    {"04FBD53A255580", LEDMATRIX_MUSIC_NOTE},
+    {"04DED53A255580", LEDMATRIX_CHIP},
+    {"041CD53A255581", LEDMATRIX_LIKE},
+    {"F322770C", LEDMATRIX_RESISTOR}, // white card
   };
 
   ledMatrix.Init(std::move(contentMap));
+}
 
-  // main app injection
+void MainInjection() {
   eventsManager.AddController(&controller);
   eventsManager.AddController(&ledMatrix);
   eventsManager.AddNotifier(&notifier);
   subscriber.SetProcessor(&eventsManager);
+}
+
+void setup() {
+  SetupSerialBlocking();
+  SetupWifiBlocking();
+  SetupMQTT();
+  SetupLedMatrix();
+
+  MainInjection();
 }
 
 void loop() {
