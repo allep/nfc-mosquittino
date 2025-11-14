@@ -1,5 +1,7 @@
 #include <ArduinoUnoR4WifiController.h>
 
+#include <Arduino.h>
+
 void ArduinoController::OnEvent(std::string_view topic,
                                 std::string_view payload) {
   digitalWrite(LED_BUILTIN, HIGH);

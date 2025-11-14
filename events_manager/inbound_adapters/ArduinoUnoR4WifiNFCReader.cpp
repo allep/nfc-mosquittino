@@ -3,7 +3,7 @@
 #include <Arduino.h>
 
 namespace {
-constexpr auto NFC_READ_PAUSE_MS{1000};
+constexpr auto NFC_READ_PAUSE_MS{500};
 }
 
 ArduinoNFCReader::ArduinoNFCReader(PN532 &nfcModule, std::string_view id,
@@ -54,7 +54,7 @@ void ArduinoNFCReader::Process() {
   if (success) {
     std::string content{"from:"};
     content += _id;
-    content += ",value:";
+    content += ";value:";
 
     char buf[3];
 
